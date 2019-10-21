@@ -67,4 +67,8 @@ export class PostsService {
         this.postsSubject.next([...this.posts]);
       })
   }
+
+  getPostByID(id: any) {
+    return this.posts.find(post => post.id === id);
+  }
 }
