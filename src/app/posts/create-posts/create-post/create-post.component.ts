@@ -21,7 +21,14 @@ export class CreatePostComponent implements OnInit {
       .subscribe((params: Params) => {
         if(params["id"]) {
           this.isEditMode = true;
-          this.post = this._postsService.getPostByID(params["id"]);
+          this._postsService.getPostByID(params["id"])
+            .subscribe(data => {
+              this.post = {
+                id: data._id,
+                title: data.title,
+                content: data.content
+              };
+            })
         } else {
           this.isEditMode = false;
         }
@@ -37,12 +44,13 @@ export class CreatePostComponent implements OnInit {
     
     if (this.isEditMode) {
       //write edit code  
+      this._postsService.updatePost(postObj);
    
     } else {
       this._postsService.createPost(postObj);
     }
+    this._router.navigate(["../"])
     form.resetForm();
-    
   }
 
 }

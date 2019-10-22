@@ -11,18 +11,6 @@ export class PostsService {
 
   postsSubject = new Subject<Post[]>();
   posts: Post[] = [];
-  // posts: Post[] = [
-    // {
-    //   "title": "Title 1",
-    //   "content": "This is content 1",
-    //   "id": 'jshduh1223'
-    // },
-    // {
-    //   "title": "Title 2",
-    //   "content": "This is content 2",
-    //   "id": 'hsdhdj445'
-    // }
-  // ];
 
   constructor( private _http: HttpClient ) { }
 
@@ -48,8 +36,8 @@ export class PostsService {
 
   createPost(postObj: Post) {
     this._http.post('http://localhost:3000/api/posts', postObj)
-    .subscribe((respData: {message: String, id: any}) => {
-        postObj.id = respData.id;
+    .subscribe((respData: {message: String, postID: any}) => {
+        postObj.id = respData.postID;
         this.posts.push(postObj);
         this.postsSubject.next([...this.posts]);
       }, errorResp => {
@@ -68,7 +56,17 @@ export class PostsService {
       })
   }
 
+  updatePost(postObj: Post) {
+    this._http.put('http://localhost:3000/api/posts/'+postObj.id, postObj)
+      .subscribe((resp: {message: string}) => {
+        const foundIndex = this.posts.findIndex(post => post.id === postObj.id);
+        this.posts[foundIndex] = postObj;
+        this.postsSubject.next([...this.posts]);
+      })
+  }
+
   getPostByID(id: any) {
-    return this.posts.find(post => post.id === id);
+    //return this.posts.find(post => post.id === id);
+    return this._http.get<{_id: any, title: string, content: string}>("http://localhost:3000/api/posts/"+id);
   }
 }
