@@ -1,3 +1,6 @@
 mat-accordion {
     margin-top: 20px;
 }
+mat-spinner{
+    margin: auto; vertical-align: middle;
+}

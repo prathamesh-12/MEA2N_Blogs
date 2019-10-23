@@ -1,3 +1,15 @@
 mat-form-field, textarea {
     width: 100%;
 }
+input[type="file"]{
+    visibility: hidden;
+}
+.upload-btn{
+    float: right;
+}
+.image-placeholder{
+    width: 150px; height: 150px;
+}
+.image-placeholder img {
+    height: 100%; width: 100%;
+}

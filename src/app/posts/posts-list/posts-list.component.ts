@@ -12,6 +12,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class PostsListComponent implements OnInit, OnDestroy {
   
   posts: Post[] = [];
+  showLoadingSpinner: boolean = false;
   fetchPostsSubscription: Subscription;
   
   constructor( private _postsService: PostsService, 
@@ -20,8 +21,10 @@ export class PostsListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._postsService.getPosts();
+    this.showLoadingSpinner = true;
     this.fetchPostsSubscription = this._postsService.postsSubject
-      .subscribe((posts: Post[]) => {
+    .subscribe((posts: Post[]) => {
+      this.showLoadingSpinner = false;
         this.posts = posts;
       })
   }
