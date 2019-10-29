@@ -19,5 +19,6 @@ export const mimeType = (control: AbstractControl): Promise<{[key: string]: any}
             }
         });
         fileReader.readAsArrayBuffer(file);
+        
     });
 }
